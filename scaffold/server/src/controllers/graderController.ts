@@ -129,7 +129,7 @@ export const claim = asyncHandler(async (req: Request, res: Response): Promise<v
 });
 
 // Dispatches a message to Pigeon with retries / cooldown handling
-async function sendToPigeon(workspace: string, to: string, text: string, clientRef: string) {
+export async function sendToPigeon(workspace: string, to: string, text: string, clientRef: string) {
   const apiKey = config.pigeon.apiKeys[workspace];
   if (!apiKey) return;
 

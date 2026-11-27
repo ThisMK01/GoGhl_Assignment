@@ -128,3 +128,12 @@ export const me = asyncHandler(async (req: Request, res: Response): Promise<void
   const session = JSON.parse(raw) as SessionData;
   res.status(200).json({ sub: session.sub, workspaces: session.workspaces });
 });
+
+export const logout = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+  const sessionId = req.cookies?.[SESSION_COOKIE];
+  if (sessionId) {
+    await redis.del(`session:${sessionId}`);
+  }
+  res.clearCookie(SESSION_COOKIE, { path: '/' });
+  res.status(200).json({ ok: true });
+});
